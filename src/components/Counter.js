@@ -4,15 +4,27 @@ import { increment, decrement } from "../store/counterSlice";
 
 const Counter = () => {
   const counter = useSelector((state) => {
-    return state.count.counter;
+    return state.counter.count;
   });
   const dispatch = useDispatch();
 
   return (
     <div>
       <h1>{counter}</h1>
-      <button onClick={() => dispatch(increment())}>Increment</button>
-      <button onClick={() => dispatch(decrement())}>Decrement</button>
+      <button
+        onClick={() => {
+          dispatch(increment());
+        }}
+      >
+        Increment
+      </button>
+      <button
+        onClick={() => {
+          dispatch(decrement());
+        }}
+      >
+        Decrement
+      </button>
     </div>
   );
 };
