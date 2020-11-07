@@ -5,9 +5,9 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
-import { MirageServer } from "./server/server";
+import { makeServer } from "./server/server";
 
-MirageServer();
+makeServer();
 
 ReactDOM.render(
   <React.StrictMode>

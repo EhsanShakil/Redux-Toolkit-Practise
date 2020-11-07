@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const updateCounter = createAsyncThunk(
+export const updateCounter = createAsyncThunk(
   "counter/updateCounter",
   async (value, thunkAPI) => {
     const response = await fetch("http://localhost:3004/api/updatecounter");
-    const data = response.json();
+    const data = await response.json();
     return data;
   }
 );
@@ -13,14 +13,29 @@ export const counterSlice = createSlice({
   name: "Counter",
   initialState: {
     count: 0,
+    isLoading: false,
+    error: "",
   },
   reducers: {
-    increment: (state) => ({
-      count: state.count + 1,
-    }),
-    decrement: (state) => ({
-      count: state.count - 1,
-    }),
+    increment: (state) => {
+      state.count++;
+    },
+    decrement: (state) => {
+      state.count--;
+    },
+  },
+  extraReducers: {
+    [updateCounter.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [updateCounter.rejected]: (state) => {
+      state.isLoading = false;
+      state.error = "no data found";
+    },
+    [updateCounter.fulfilled]: (state, action) => {
+      state.count += action.payload;
+      state.isLoading = false;
+    },
   },
 });
 export const { increment, decrement } = counterSlice.actions;
